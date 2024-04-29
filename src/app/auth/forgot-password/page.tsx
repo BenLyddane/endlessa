@@ -10,16 +10,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {  signup } from "./actions";
+import { forgotPassword } from "./actions";
 
-export default function LoginPage() {
+export default function MagicLogin() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <Card className="mx-auto w-[350px]">
         <CardHeader>
-          <CardTitle className="text-2xl">Sign Up</CardTitle>
+          <CardTitle className="text-2xl">Forgot your password?</CardTitle>
           <CardDescription>
-            Enter your email and password below. You must verify your email after signing up. 
+            Enter your email below to log in with magic email link. 
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -31,29 +31,20 @@ export default function LoginPage() {
                 name="email"
                 type="email"
                 placeholder="m@example.com"
-                required
               />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-            
+              
               </div>
-              <Input id="password" name="password" type="password" required />
+            
             </div>
-            <Button formAction={signup} className="w-full">
-              Sign Up
+            <Button formAction={forgotPassword} className="w-full">
+              Send magic email link
             </Button>
           </form>
-          <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="underline">
-              Log in
-            </Link>
-          </div>
-          <div className="mt-4 underline text-center text-sm">
-            <Link href="/">Home</Link>
-          </div>
+       
         </CardContent>
       </Card>
     </div>

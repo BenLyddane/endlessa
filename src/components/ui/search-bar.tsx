@@ -9,7 +9,7 @@ export const SearchBar: React.FC = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const inputValue = formData.get("input")?.toString() || "";
-    console.log("Submitted value:", inputValue);
+
     cookies().set("lastSearch", inputValue);
   };
 

@@ -1,10 +1,11 @@
 import { SearchBar } from "@/components/ui/search-bar";
-import Navigation from "@/components/ui/navigation";
+import Navigation from "@/components/navigation/navigation";
 import Integrations from "@/components/integrations";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { createClient } from "@/utils/supabase/server";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
 export default async function Home() {
   const supabase = createClient();
   const { data: user, error } = await supabase.auth.getUser();
@@ -18,6 +19,17 @@ export default async function Home() {
       <div className="flex-1 flex flex-col items-center justify-center">
         <h1 className="text-6xl font-bold mb-8">Endlessa</h1>
         <p>Search your own data.</p>
+        {!user.user && (
+          <div className="pt-4">
+            <Link href="/auth/login" className="underline">
+              Log In
+            </Link>
+            <span> or </span>
+            <Link href="/auth/login" className="underline">
+              Sign up
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Search Bar */}
