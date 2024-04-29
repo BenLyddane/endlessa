@@ -9,6 +9,8 @@ import {
   FiHelpCircle,
   FiUser,
   FiUserPlus,
+  FiGrid,
+  FiKey,
   FiInfo,
   FiMail,
 } from "react-icons/fi";
@@ -40,36 +42,46 @@ const Navigation = () => {
     {
       label: "How it works / FAQ",
       icon: FiInfo,
-      path: "/how-it-works", // Add the path here
+      path: "/how-it-works", 
     },
     {
       label: "Contact Us",
       icon: FiMail,
-      path: "/contact-us", // Add the path here
+      path: "/contact-us", 
     },
     ...(!user
       ? [
           {
             label: "Login",
             icon: FiUser,
-            path: "/auth/login", // Add the path here
+            path: "/auth/login", 
           },
           {
             label: "Sign up",
             icon: FiUserPlus,
-            path: "/auth/signup", // Add the path here
+            path: "/auth/signup", 
           },
         ]
       : []),
     ...(user
       ? [
+        {
+          label: "Integrations",
+          icon: FiGrid,
+          path: "/integrations", 
+        }, {
+          label: "Api Keys",
+          icon: FiKey,
+          path: "/api-keys", 
+        },
           {
             label: "Settings",
             icon: FiSettings,
-            path: "/settings", // Add the path here
+            path: "/settings", 
           },
-        ]
-      : []),
+        
+            ]
+    : []),
   ];
 
   return (

@@ -1,3 +1,4 @@
+// pages/index.tsx
 import { SearchBar } from "@/components/ui/search-bar";
 import Navigation from "@/components/navigation/navigation";
 import Integrations from "@/components/integrations";
@@ -5,10 +6,26 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 import { createClient } from "@/utils/supabase/server";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import ChatWindow from "@/components/chat-window/chat-window";
+import { processMessage } from "./search_actions";
+
+interface Message {
+  content: string;
+  sender: "user" | "assistant";
+}
 
 export default async function Home() {
   const supabase = createClient();
   const { data: user, error } = await supabase.auth.getUser();
+
+  let messages: Message[] = [];
+  async function onSendMessage(message: string) {
+    "use server";
+    messages = [...messages, { content: message, sender: "user" }];
+    // Process the user's message and generate a response
+    const response = await processMessage(message);
+    messages = [...messages, { content: response, sender: "assistant" }];
+  }
 
   return (
     <div className="flex h-screen">
@@ -17,8 +34,15 @@ export default async function Home() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center">
-        <h1 className="text-6xl font-bold mb-8">Endlessa</h1>
-        <p>Search your own data.</p>
+        {messages.length === 0 && (
+          <>
+            <h1 className="text-6xl font-bold mb-8">Endlessa</h1>
+            <p>Search your own data.</p>
+          </>
+        )}
+        {messages.length > 0 && (
+          <ChatWindow messages={messages} onSendMessage={onSendMessage} />
+        )}
         {!user.user && (
           <div className="pt-4">
             <Link href="/auth/login" className="underline">

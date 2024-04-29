@@ -1,9 +1,9 @@
-// settings_actions.ts
+// api_key_actions.ts
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
 
-export async function updateUser(
+export async function updateApiKeys(
   prevState: { message: string },
   formData: FormData
 ) {
@@ -17,14 +17,10 @@ export async function updateUser(
   const userId = authUser.user.id;
   const updateData: any = {};
 
-  if (formData.has("avatar_url"))
-    updateData.avatar_url = formData.get("avatar_url") as string;
-  if (formData.has("first_name"))
-    updateData.first_name = formData.get("first_name") as string;
-  if (formData.has("last_name"))
-    updateData.last_name = formData.get("last_name") as string;
-  if (formData.has("username"))
-    updateData.username = formData.get("username") as string;
+  if (formData.has("open_ai_api_key"))
+    updateData.open_ai_api_key = formData.get("open_ai_api_key") as string;
+  if (formData.has("anthropic_api_key"))
+    updateData.anthropic_api_key = formData.get("anthropic_api_key") as string;
 
   try {
     const { data: userData, error } = await supabase
@@ -35,18 +31,18 @@ export async function updateUser(
       .single();
 
     if (error) {
-      throw new Error(`Failed to update user settings: ${error.message}`);
+      throw new Error(`Failed to update API keys: ${error.message}`);
     }
 
-    return { message: "User settings updated successfully" };
+    return { message: "API keys updated successfully" };
   } catch (error: any) {
     return {
-      message: `An error occurred while updating user settings: ${error.message}`,
+      message: `An error occurred while updating API keys: ${error.message}`,
     };
   }
 }
 
-export async function getUserData() {
+export async function getApiKeys() {
   const supabase = createClient();
   const { data: authUser, error: authError } = await supabase.auth.getUser();
 
@@ -56,12 +52,12 @@ export async function getUserData() {
 
   const { data: userData, error: userError } = await supabase
     .from("users")
-    .select("*")
+    .select("open_ai_api_key, anthropic_api_key")
     .eq("id", authUser.user.id)
     .single();
 
   if (userError) {
-    throw new Error(`Failed to fetch user data: ${userError.message}`);
+    throw new Error(`Failed to fetch API keys: ${userError.message}`);
   }
 
   return userData;
