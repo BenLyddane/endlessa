@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 
 interface ApiKeys {
   open_ai_api_key?: string;
-  anthropic_api_key?: string;
+//   anthropic_api_key?: string;
 }
 
 const initialState = {
@@ -104,21 +104,7 @@ export default function ApiKeyPage() {
                 </Button>
               </div>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="anthropicApiKey">Anthropic API Key</Label>
-              <div className="flex items-center">
-                <Input
-                  id="anthropicApiKey"
-                  name="anthropic_api_key"
-                  type={showAnthropicKey ? "text" : "password"}
-                  defaultValue={apiKeys?.anthropic_api_key || ""}
-                  className="flex-1"
-                />
-                <Button variant="ghost" onClick={handleToggleAnthropicKey}>
-                  {showAnthropicKey ? <EyeOff size={16} /> : <Eye size={16} />}
-                </Button>
-              </div>
-            </div>
+          
             {state?.message && (
               <Alert
                 variant={

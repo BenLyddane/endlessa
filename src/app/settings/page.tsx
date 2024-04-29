@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { updateUser, getUserData } from "./settings_actions";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface UserData {
